@@ -26,7 +26,9 @@ services:
       - app-network
 
   mysql:
-    image: mysql:5.7
+    build:
+      context: ./docker/mysql
+      dockerfile: Dockerfile
     container_name: mysql
     restart: always
     environment:
@@ -42,7 +44,9 @@ services:
       - app-network
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    build:
+      context: ./docker/phpmyadmin
+      dockerfile: Dockerfile
     container_name: phpmyadmin
     restart: always
     ports:
