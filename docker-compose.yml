@@ -2,12 +2,17 @@ version: '3.8'
 
 services:
   apache:
-    container_name: ${COMPOSE_PROJECT_NAME}_apache
-    ports:
-      - "80:80"
     build:
       context: ./docker/apache
       dockerfile: Dockerfile
+    container_name: ${COMPOSE_PROJECT_NAME}_apache
+    ports:
+      - "80:80"
+    volumes:
+      - ../source:/var/www/html:rw,delegated
+    environment:
+        - APACHE_RUN_USER=www-data
+        - APACHE_RUN_GROUP=www-data
     depends_on:
       - php
     networks:
