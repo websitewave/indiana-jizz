@@ -82,7 +82,7 @@ cd my-awesome-project
     MYSQL_ROOT_PASSWORD=your_root_password
     MYSQL_DATABASE=your_database
     MYSQL_USER=your_user
-    MYSQL_PASSWORD=your_password`
+    MYSQL_PASSWORD=your_password
 
 **Важно:** Замените `your_root_password`, `your_database`, `your_user` и `your_password` на реальные значения, которые вы хотите использовать для вашей базы данных MySQL.
 
