@@ -5,11 +5,14 @@ services:
     build:
       context: ./docker/apache
       dockerfile: Dockerfile
-    container_name: apache
+    container_name: ${COMPOSE_PROJECT_NAME}_apache
     ports:
       - "80:80"
     volumes:
-      - ../source:/var/www/html
+      - ../source:/var/www/html:rw,delegated
+    environment:
+        - APACHE_RUN_USER=www-data
+        - APACHE_RUN_GROUP=www-data
     depends_on:
       - php
     networks:
@@ -19,7 +22,7 @@ services:
     build:
       context: ./docker/php
       dockerfile: Dockerfile
-    container_name: php
+    container_name: ${COMPOSE_PROJECT_NAME}_php
     volumes:
       - ../source:/var/www/html
     networks:
@@ -29,7 +32,7 @@ services:
     build:
       context: ./docker/mysql
       dockerfile: Dockerfile
-    container_name: mysql
+    container_name: ${COMPOSE_PROJECT_NAME}_mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -47,7 +50,7 @@ services:
     build:
       context: ./docker/phpmyadmin
       dockerfile: Dockerfile
-    container_name: phpmyadmin
+    container_name: ${COMPOSE_PROJECT_NAME}_phpmyadmin
     restart: always
     ports:
       - "8080:80"
