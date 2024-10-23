@@ -38,7 +38,9 @@ USER root
 RUN mkdir -p /var/www/html
 
 # Установка прав доступа для директории
-RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
+RUN find /var/www/html -type d -exec chmod 755 {} \; && \
+    find /var/www/html -type f -exec chmod 644 {} \; && \
+    chown -R www-data:www-data /var/www/html
 
 # Настройка рабочей директории
 WORKDIR /var/www/html

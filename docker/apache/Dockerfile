@@ -11,7 +11,9 @@ RUN chown -R www-data:www-data /usr/local/apache2/logs && chmod -R 755 /usr/loca
 RUN mkdir -p /var/www/html
 
 # Установка прав доступа для директории
-RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
+RUN find /var/www/html -type d -exec chmod 755 {} \; && \
+    find /var/www/html -type f -exec chmod 644 {} \; && \
+    chown -R www-data:www-data /var/www/html
 
 # Копируем стандартный конфигурационный файл httpd.conf во временное место
 RUN cp /usr/local/apache2/conf/httpd.conf /usr/local/apache2/conf/httpd.conf.bak
