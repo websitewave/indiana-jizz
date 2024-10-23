@@ -10,9 +10,6 @@ services:
       - "80:80"
     volumes:
       - ../source:/var/www/html:rw,delegated
-    environment:
-        - APACHE_RUN_USER=www-data
-        - APACHE_RUN_GROUP=www-data
     depends_on:
       - php
     networks:

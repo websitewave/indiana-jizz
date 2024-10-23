@@ -16,4 +16,6 @@ RUN sed -i '/LoadModule proxy_module/s/^#//g' /usr/local/apache2/conf/httpd.conf
     && echo '    SetHandler "proxy:fcgi://php:9000"' >> /usr/local/apache2/conf/httpd.conf \
     && echo '</FilesMatch>' >> /usr/local/apache2/conf/httpd.conf
 
+RUN chmod 777 -R /var/www/html
+
 
