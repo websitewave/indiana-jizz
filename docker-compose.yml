@@ -9,7 +9,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./source:/var/www/html
+      - ../source:/var/www/html
     depends_on:
       - php
     networks:
@@ -21,7 +21,7 @@ services:
       dockerfile: Dockerfile
     container_name: php
     volumes:
-      - ./source:/var/www/html
+      - ../source:/var/www/html
     networks:
       - app-network
 
