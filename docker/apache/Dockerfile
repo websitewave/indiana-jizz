@@ -10,8 +10,14 @@ RUN chown -R www-data:www-data /usr/local/apache2/logs && chmod -R 755 /usr/loca
 # Создание директории для документов
 RUN mkdir -p /var/www/html
 
+# Установка прав доступа для директории
+RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
+
 # Копируем стандартный конфигурационный файл httpd.conf во временное место
 RUN cp /usr/local/apache2/conf/httpd.conf /usr/local/apache2/conf/httpd.conf.bak
+
+# Устанавливаем ServerName
+RUN sed -i '/^#ServerName www.example.com:80/s/^#//; s/www.example.com:80/localhost/' /usr/local/apache2/conf/httpd.conf
 
 # Вносим необходимые изменения с помощью sed
 RUN sed -i '/LoadModule proxy_module/s/^#//g' /usr/local/apache2/conf/httpd.conf \
@@ -26,8 +32,11 @@ RUN sed -i '/LoadModule proxy_module/s/^#//g' /usr/local/apache2/conf/httpd.conf
     && echo '    SetHandler "proxy:fcgi://php:9000"' >> /usr/local/apache2/conf/httpd.conf \
     && echo '</FilesMatch>' >> /usr/local/apache2/conf/httpd.conf
 
-# Установка прав доступа для директории
-RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
+# Копируем файл конфигурации виртуального хоста
+COPY my.conf /usr/local/apache2/conf/extra/my-site.conf
+
+# Обновляем основной конфигурационный файл httpd.conf для загрузки конфигурации виртуального хоста
+RUN echo 'Include conf/extra/my-site.conf' >> /usr/local/apache2/conf/httpd.conf
 
 # Возвращаемся к пользователю www-data
 USER www-data

@@ -33,5 +33,12 @@ RUN apt-get update && apt-get install -y \
 # Копируем кастомный php.ini
 COPY php.ini /usr/local/etc/php/
 
+USER root
+
+RUN mkdir -p /var/www/html
+
+# Установка прав доступа для директории
+RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
+
 # Настройка рабочей директории
 WORKDIR /var/www/html
