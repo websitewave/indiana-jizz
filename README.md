@@ -77,7 +77,7 @@ cd my-awesome-project
 
 Откройте файл `.env` в текстовом редакторе и добавьте следующие строки:
 
-    `COMPOSE_PROJECT_NAME=your_project_name
+    COMPOSE_PROJECT_NAME=your_project_name
 
     MYSQL_ROOT_PASSWORD=your_root_password
     MYSQL_DATABASE=your_database
