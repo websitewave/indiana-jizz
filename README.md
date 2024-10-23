@@ -81,9 +81,16 @@ cd my-awesome-project
 
 Откройте файл `.env` в текстовом редакторе и добавьте следующие строки:
 
-`MYSQL_ROOT_PASSWORD=your_root_password MYSQL_DATABASE=your_database MYSQL_USER=your_user MYSQL_PASSWORD=your_password`
+    `COMPOSE_PROJECT_NAME=your_project_name
+
+    MYSQL_ROOT_PASSWORD=your_root_password
+    MYSQL_DATABASE=your_database
+    MYSQL_USER=your_user
+    MYSQL_PASSWORD=your_password`
 
 **Важно:** Замените `your_root_password`, `your_database`, `your_user` и `your_password` на реальные значения, которые вы хотите использовать для вашей базы данных MySQL.
+
+**Обязательно:** Замените значение переменный `COMPOSE_PROJECT_NAME` на название своего проекта во избежание ошибок.
 
 ### Шаг 6: Запустите Docker-сборку
 
