@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: ${COMPOSE_PROJECT_NAME}_apache
     ports:
-      - "80:80"
+      - ${PROJECT_PORT}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
@@ -38,6 +38,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: ${MYSQL_HOST}
     ports:
       - "3306:3306"
     volumes:
@@ -45,6 +46,7 @@ services:
     user: "1000:1000"
     networks:
       - app-network
+    entrypoint: ["/bin/bash", "/docker/mysql/docker-entrypoint.sh"]
 
   phpmyadmin:
     build:
@@ -53,7 +55,7 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}_phpmyadmin
     restart: always
     ports:
-      - "8080:80"
+      - ${PMA_PORT}
     environment:
       PMA_HOST: mysql
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}

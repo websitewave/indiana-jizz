@@ -62,12 +62,12 @@ cd my-awesome-project
     my-awesome-project/
     ├── docker/                # подмодуль с Docker-сборкой
     │   ├── docker-compose.yml
-    │   ├── .env
+    │   ├── .env.example
     │   └── docker/            # папка с Dockerfile и конфигурациями
     ├── source/                # ваши файлы приложения
     ├── README.md
     └── .gitignore
-    
+ 
 
 Папку `source`, где будет находиться ваш PHP-код, необходимо создать заранее в корневой папке проекта и разместить там ваши PHP-файлы
 
@@ -77,22 +77,32 @@ cd my-awesome-project
 mkdir source
 ```
 
+Теперь загрузите туда файлы вашего проекта
+
 ### Шаг 5: Настройте переменные окружения
 
 Перейдите в папку `docker` и отредактируйте файл `.env`:
 
-Откройте файл `.env` в текстовом редакторе и добавьте следующие строки:
-
-    COMPOSE_PROJECT_NAME=your_project_name
-
-    MYSQL_ROOT_PASSWORD=your_root_password
-    MYSQL_DATABASE=your_database
-    MYSQL_USER=your_user
-    MYSQL_PASSWORD=your_password
-
-**Важно:** Замените `your_root_password`, `your_database`, `your_user` и `your_password` на реальные значения, которые вы хотите использовать для вашей базы данных MySQL.
+Необходимо **обязательно** скопировать `.env.example`, назвать его копию `.env` и поставить там свои значения
 
 **Обязательно:** Замените значение переменный `COMPOSE_PROJECT_NAME` на название своего проекта во избежание ошибок.
+
+### Шаг 5.1: Права доступа
+
+Добавьте своего пользователя в группу `www-data` например:
+
+`sudo usermod -aG www-data user`
+
+Теперь поставьте группу пользователей у папки
+
+`sudo chgrp -R www-data ./source`
+
+Теперь поставьте разрешения
+
+`sudo find ./source -type d -exec chmod 2775 {} +`
+`sudo find ./source -type f -exec chmod 664 {} +`
+
+``
 
 ### Шаг 6: Запустите Docker-сборку
 
@@ -100,13 +110,7 @@ mkdir source
 
 `docker-compose up -d --build`
 
-*   `docker-compose up`: Запускает контейнеры, определённые в `docker-compose.yml`.
-*   `-d`: Запускает контейнеры в фоновом режиме (detached mode).
-*   `--build`: Собирает образы Docker перед запуском контейнеров.
-
 Подождите, пока Docker загрузит необходимые образы и запустит контейнеры. Это может занять несколько минут при первом запуске.
-
-Затем будет создана папка `source` куда вы можете поместить файлы вашего сайта\приложения
 
 ### Шаг 7: Проверьте работу сервисов
 
