@@ -1,4 +1,4 @@
-FROM mariadb:5.5.68
+FROM mariadb:5.5
 
 RUN mkdir -p /var/lib/mysql
 
