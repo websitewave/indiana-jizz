@@ -1,7 +1,5 @@
-FROM mysql:5.7
+FROM mariadb:5.5.68
 
-# Создание директории для хранения данных
 RUN mkdir -p /var/lib/mysql
 
-# Папка для хранения данных
 VOLUME /var/lib/mysql
